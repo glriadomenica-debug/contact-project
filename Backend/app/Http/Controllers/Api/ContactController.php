@@ -4,21 +4,21 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Helpers\ApiMessage;
-use App\Models\Contacts;
+use App\Models\Contact;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
-            // $contact = Contacts::all();
+            // $contact = Contact::all();
             $sortBy = $request->sort_by ?? 'full_name';
             $sortOrder = $request->sort_order ?? 'asc';
 
-            $contact = Contacts::orderBy(
+            $contact = Contact::orderBy(
                 $sortBy,
                 $sortOrder
             )->paginate(10);
@@ -33,14 +33,14 @@ class ContactController extends Controller
         try {
             $rule = [
                 'full_name' => 'required|string',
-                'email_address' => 'required|email|unique:contacts,email',
+                'email_address' => 'required|email|unique:contact,email_address',
                 'phone_number' => 'required|string',
             ];
 
             $message = [
                 'full_name.required' => 'Full name is required',
-                'email.required' => 'Email is required',
-                'email.email' => 'Email must be a valid email address',
+                'email_address.required' => 'Email is required',
+                'email_address.email' => 'Email must be a valid email address',
                 'phone_number.required' => 'Phone number is required',
             ];
 
@@ -57,7 +57,7 @@ class ContactController extends Controller
             DB::beginTransaction();
 
             try {
-                $contact = new Contacts();
+                $contact = new Contact();
                 $contact->full_name = $request->full_name;
                 $contact->email_address = $request->email_address;
                 $contact->phone_number = $request->phone_number;
@@ -77,7 +77,7 @@ class ContactController extends Controller
     public function show($id)
     {
         try {
-            $contact = Contacts::find($id);
+            $contact = Contact::find($id);
             if (!$contact) {
                 return ApiMessage::error("Contact not found", 404);
             }
@@ -90,13 +90,13 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $contact = Contacts::find($id);
+            $contact = Contact::find($id);
             if (!$contact) {
                 return ApiMessage::error("Contact not found", 404);
             }
             $rule = [
                 'full_name' => 'sometimes|string',
-                'email_address' => 'sometimes|email|unique:contacts,email,' . $id,
+                'email_address' => 'sometimes|email|unique:contact,email_address,' . $id,
                 'phone_number' => 'sometimes|string',
             ];
 
@@ -123,7 +123,7 @@ class ContactController extends Controller
     public function destroy($id)
     {
         try {
-            $contact = Contacts::find($id);
+            $contact = Contact::find($id);
             if (!$contact) {
                 return ApiMessage::error("Contact not found", 400);
             }
