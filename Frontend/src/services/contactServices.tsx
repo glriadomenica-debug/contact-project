@@ -1,14 +1,20 @@
 import api from "../utils/api";
-import type { Contact } from "../types/contact";
+import type {
+  Contact,
+  ContactForm,
+  ApiResponse,
+  ContactPagination,
+} from "../types/contact";
 
 export const getContacts = async (
   page = 1,
   sortBy = "full_name",
   sortOrder = "asc",
-) => {
+): Promise<ApiResponse<ContactPagination>> => {
   const response = await api.get(
     `/contacts?page=${page}&sort_by=${sortBy}&sort_order=${sortOrder}`,
   );
+
   return response.data;
 };
 
@@ -17,8 +23,9 @@ export const getContactbyId = async (id: number) => {
   return response.data;
 };
 
-export const createContact = async (data: Contact) => {
+export const createContact = async (data: ContactForm) => {
   const response = await api.post("/contacts", data);
+
   return response.data;
 };
 
