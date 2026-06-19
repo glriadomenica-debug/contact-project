@@ -1,14 +1,14 @@
 import api from "../utils/api";
+import type { Contact } from "../types/contact";
 
-interface Contact {
-  id: number;
-  full_name: string;
-  email_address: string;
-  phone_number: string;
-}
-
-export const getContacts = async () => {
-  const response = await api.get("/contacts");
+export const getContacts = async (
+  page = 1,
+  sortBy = "full_name",
+  sortOrder = "asc",
+) => {
+  const response = await api.get(
+    `/contacts?page=${page}&sort_by=${sortBy}&sort_order=${sortOrder}`,
+  );
   return response.data;
 };
 
