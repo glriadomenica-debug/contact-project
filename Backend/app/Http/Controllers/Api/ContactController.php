@@ -14,7 +14,8 @@ class ContactController extends Controller
     public function index()
     {
         try {
-            $contact = Contacts::all();
+            // $contact = Contacts::all();
+            $contact = Contacts::paginate(10);
             return ApiMessage::success("Successfully get contact data", $contact, 200);
         } catch (\Exception $th) {
             return ApiMessage::error($th->getMessage(), 500);
