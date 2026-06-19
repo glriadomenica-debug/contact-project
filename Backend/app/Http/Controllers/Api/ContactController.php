@@ -15,7 +15,13 @@ class ContactController extends Controller
     {
         try {
             // $contact = Contacts::all();
-            $contact = Contacts::paginate(10);
+            $sortBy = $request->sort_by ?? 'full_name';
+            $sortOrder = $request->sort_order ?? 'asc';
+
+            $contact = Contacts::orderBy(
+                $sortBy,
+                $sortOrder
+            )->paginate(10);
             return ApiMessage::success("Successfully get contact data", $contact, 200);
         } catch (\Exception $th) {
             return ApiMessage::error($th->getMessage(), 500);
