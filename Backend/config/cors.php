@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['https://contact-project-kappa.vercel.app'],
 
     'allowed_origins_patterns' => [],
 
