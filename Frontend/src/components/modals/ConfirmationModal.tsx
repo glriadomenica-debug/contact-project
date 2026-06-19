@@ -14,28 +14,36 @@ export default function ConfirmationModal({
   return (
     <>
       <div
-        className={`fixed inset-0 flex items-center justify-center z-50 ${
-          openModal ? "" : "hidden"
+        className={`fixed inset-0 z-50 flex items-center justify-center px-4 ${
+          openModal ? "block" : "hidden"
         }`}
+        onClick={() => setOpenModal(false)}
       >
-        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
 
-        <div className="relative bg-white p-6 rounded-lg w-80">
-          <h2 className="font-bold text-lg mb-3">Delete Contact</h2>
+        <div
+          className="relative w-full max-w-sm bg-white rounded-2xl shadow-xl p-6"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h2 className="text-lg font-bold text-gray-800 mb-2">
+            Delete Contact
+          </h2>
 
-          <p className="mb-5">Are you sure you want to delete this contact?</p>
+          <p className="text-sm text-gray-500 mb-6">
+            Are you sure you want to delete this contact?
+          </p>
 
-          <div className="flex justify-end gap-2">
+          <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={handleSubmit}
-              className="bg-red-500 text-white px-4 py-2 rounded"
+              className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg cursor-pointer transition"
             >
               Delete
             </button>
 
             <button
               onClick={() => setOpenModal(false)}
-              className="bg-gray-500 text-white px-4 py-2 rounded"
+              className="w-full bg-gray-500 hover:bg-gray-600 text-white py-2 rounded-lg cursor-pointer transition"
             >
               Cancel
             </button>
