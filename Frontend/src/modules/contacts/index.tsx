@@ -1,1 +1,1 @@
-import { default as ContactList } from "./pages/contactList";
+export { default as ContactList } from "./pages/contactList";
