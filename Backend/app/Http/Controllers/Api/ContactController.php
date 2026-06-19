@@ -8,7 +8,6 @@ use App\Models\Contacts;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Spatie\FlareClient\Api;
 
 class ContactController extends Controller
 {
