@@ -174,16 +174,17 @@ export default function ListContact() {
           </div>
         )}
 
-        <div className="md:hidden space-y-3">
-          {loading && (
-            <div className="text-center py-10 text-gray-500">Loading...</div>
-          )}
+        {loading && (
+          <div className="text-center py-10 text-gray-500">Loading...</div>
+        )}
 
-          {!loading && contacts.length === 0 && (
-            <div className="text-center py-10 text-gray-500">
-              No contacts found
-            </div>
-          )}
+        {!loading && contacts.length === 0 && (
+          <div className="text-center py-10 text-gray-500">
+            No contacts found
+          </div>
+        )}
+
+        <div className="md:hidden space-y-3">
           {contacts.map((contact) => (
             <div key={contact.id} className="border rounded-xl p-4 shadow-sm">
               <div className="font-semibold text-blue-900">

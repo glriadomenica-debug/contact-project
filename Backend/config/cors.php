@@ -22,9 +22,8 @@ return [
     'allowed_origins' => [
         'http://localhost:5173',
         'http://127.0.0.1:5173',
-        'https://contact-project-kappa.vercel.app',
-        'https://gloria-contact-book.vercel.app'
-
+        'https://gloria-contact-book.vercel.app',
+        'https://contact-project-kappa.vercel.app'
     ],
 
     'allowed_origins_patterns' => [],
