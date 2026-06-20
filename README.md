@@ -1,6 +1,6 @@
 # Contact Book
 
-A simple Contact Management System built with React, TypeScript, Laravel, and MySQL.
+A simple Contact Management System built with React, TypeScript, Laravel and MySQL.
 
 ## Features
 
@@ -9,8 +9,8 @@ A simple Contact Management System built with React, TypeScript, Laravel, and My
 - Update Existing Contact
 - Delete Contact
 - Search Contact by Name
-- Sort Contacts (Name, Email, Phone)
-- Pagination 
+- Sorting Contacts
+- Pagination
 - Form Validation
 
 ## Tech Stack
@@ -21,117 +21,113 @@ A simple Contact Management System built with React, TypeScript, Laravel, and My
 - Vite
 - Tailwind CSS
 - Axios
-- React Router DOM
-- React Icons
 
 ### Backend
 - Laravel
 - MySQL
-- Eloquent ORM
 - REST API
 
-### Deployment
-- Frontend: Vercel
-- Backend: Railway
+## Setup Instructions
 
----
-
-## Project Structure
-
-### Frontend
+### 1. Clone Repository
 
 ```bash
-src/
-├── components/
-├── hooks/
-├── modules/
-├── services/
-├── types/
-├── utils/
-└── routes/
-```
-
-### Backend
-```bash
-Backend/
-├── app/
-│   ├── Http/
-│   │   └── Controllers/
-│   │   │   └── Api/
-│   ├── Models/
-│   └── Helpers/
-├── database/
-│   └── migrations/
-└── routes/
+git clone https://github.com/glriadomenica-debug/contact-project.git
+cd contact-project
 ```
 
 ---
+
+### 2. Frontend Setup
+
+```bash
+cd Frontend
+npm install
+```
+
+Create `.env` file:
+
+```env
+VITE_API_URL=http://localhost:8000
+```
+
+Run frontend:
+
+```bash
+npm run dev
+```
+
+Frontend will run at:
+
+```text
+http://localhost:5173
+```
+
+---
+
+### 3. Backend Setup
+
+```bash
+cd Backend
+composer install
+```
+
+Create `.env` file and configure database:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=contact_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Generate application key:
+
+```bash
+php artisan key:generate
+```
+
+Run migration:
+
+```bash
+php artisan migrate
+```
+
+Start Laravel server:
+
+```bash
+php artisan serve
+```
+
+Backend will run at:
+
+```text
+http://localhost:8000
+```
 
 ## API Endpoints
 
-### Get All Contacts
-
-```http
-GET /contacts
-```
-
-### Get Contact By ID
-
-```http
-GET /contacts/{id}
-```
-
-### Create Contact
-
-```http
-POST /contacts
-```
-
-### Update Contact
-
-```http
-PUT /contacts/{id}
-```
-
-### Delete Contact
-
-```http
-DELETE /contacts/{id}
-```
-
-
----
+| Method | Endpoint | Description |
+|----------|----------|-------------|
+| GET | /contacts | Get all contacts |
+| GET | /contacts/{id} | Get contact by ID |
+| POST | /contacts | Create contact |
+| PUT | /contacts/{id} | Update contact |
+| DELETE | /contacts/{id} | Delete contact |
 
 ## Live Demo
 
 Frontend:
-
 https://gloria-contact-book.vercel.app
 
-Backend API:
-
+Backend:
 https://contact-project-production.up.railway.app
-
----
-## Key Highlights
-
-- Full CRUD Functionality
-- Search by Name
-- Sorting & Pagination
-- Form Validation
-- RESTful API Development
-- Responsive Design
-- Frontend & Backend Deployment
 
 ## Author
 
 **Gloria Domenica Ferreira Da Costa E Silva**
 
-- GitHub: https://github.com/glriadomenica-debug
-- LinkedIn: Add your LinkedIn profile here
-
----
-
-## License
-
-This project is open-source and available under the MIT License.
+GitHub:
+https://github.com/glriadomenica-debug
