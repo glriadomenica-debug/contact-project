@@ -19,6 +19,13 @@ export default function ListContact() {
   const [lastPage, setLastPage] = useState(1);
   const [sortBy, setSortBy] = useState("full_name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [errors, setErrors] = useState({
+    full_name: "",
+    email_address: "",
+    phone_number: "",
+  });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [formContact, setFormContact] = useState<ContactForm>({
     full_name: "",
@@ -47,32 +54,63 @@ export default function ListContact() {
   }, [currentPage, sortBy, sortOrder]);
 
   const handleChangeContact = (e: any) => {
+    const { name, value } = e.target;
     setFormContact({
       ...formContact,
-      [e.target.name]: e.target.value,
+      [name]: value,
+    });
+    setErrors({
+      ...errors,
+      [name]: "",
     });
   };
 
   const handleSubmitContact = async () => {
+    setError("");
+    const newErrors = {
+      full_name: "",
+      email_address: "",
+      phone_number: "",
+    };
+
+    if (!formContact.full_name.trim()) {
+      newErrors.full_name = "Full Name is required";
+    }
+
+    if (!formContact.email_address.trim()) {
+      newErrors.email_address = "Email is required";
+    }
+
+    if (!formContact.phone_number.trim()) {
+      newErrors.phone_number = "Phone Number is required";
+    }
+    setErrors(newErrors);
+
     if (
-      !formContact.full_name.trim() ||
-      !formContact.email_address.trim() ||
-      !formContact.phone_number.trim()
+      newErrors.full_name ||
+      newErrors.email_address ||
+      newErrors.phone_number
     ) {
-      alert("All fields are required");
       return;
     }
+
     try {
       await createContact(formContact);
-      fetchContacts();
-      setOpenModal(false);
+      setSuccess("Contact created successfully");
+      setErrors({
+        full_name: "",
+        email_address: "",
+        phone_number: "",
+      });
       setFormContact({
         full_name: "",
         email_address: "",
         phone_number: "",
       });
-    } catch (error) {
-      console.log(error);
+      fetchContacts();
+      setOpenModal(false);
+    } catch (error: any) {
+      setError(error.response?.data?.message || "Failed to create new contact");
     }
   };
 
@@ -122,6 +160,18 @@ export default function ListContact() {
           >
             + Add Contact
           </button>
+
+          {error && (
+            <div className="mb-4 p-3 rounded-lg bg-red-100 text-red-700 border border-red-200">
+              {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="mb-4 p-3 rounded-lg bg-green-100 text-green-700 border border-green-200">
+              {success}
+            </div>
+          )}
         </div>
 
         {loading && (
@@ -240,6 +290,7 @@ export default function ListContact() {
           handleSubmit={handleSubmitContact}
           title="Add Contact"
           formContact={formContact}
+          errors={errors}
         />
         <ContactModalConfirmation
           openModal={openModalDelete}

@@ -9,6 +9,11 @@ interface ContactModalProps {
     email_address: string;
     phone_number: string;
   };
+  errors: {
+    full_name: string;
+    email_address: string;
+    phone_number: string;
+  };
 }
 
 export default function ContactModal({
@@ -18,6 +23,7 @@ export default function ContactModal({
   handleSubmit,
   handleChange,
   formContact,
+  errors,
 }: ContactModalProps) {
   return (
     <>
@@ -44,6 +50,9 @@ export default function ContactModal({
               className="w-full mt-1 border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 outline-none"
               placeholder="Enter full name"
             />
+            {errors.full_name && (
+              <p className="text-red-500 text-sm mt-1">{errors.full_name}</p>
+            )}
           </div>
 
           <div className="mb-4">
@@ -56,6 +65,11 @@ export default function ContactModal({
               className="w-full mt-1 border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 outline-none"
               placeholder="Enter email"
             />
+            {errors.email_address && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email_address}
+              </p>
+            )}
           </div>
 
           <div className="mb-6">
@@ -68,6 +82,9 @@ export default function ContactModal({
               className="w-full mt-1 border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 outline-none"
               placeholder="Enter phone number"
             />
+            {errors.phone_number && (
+              <p className="text-red-500 text-sm mt-1">{errors.phone_number}</p>
+            )}
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3">
