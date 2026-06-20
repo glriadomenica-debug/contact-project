@@ -32,6 +32,7 @@ export default function ListContact() {
     email_address: "",
     phone_number: "",
   });
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   const fetchContacts = async () => {
@@ -52,6 +53,10 @@ export default function ListContact() {
   useEffect(() => {
     fetchContacts();
   }, [currentPage, sortBy, sortOrder]);
+
+  const filteredContacts = contacts.filter((contact) =>
+    contact.full_name.toLowerCase().includes(search.toLowerCase()),
+  );
 
   const handleChangeContact = (e: any) => {
     const { name, value } = e.target;
@@ -147,6 +152,16 @@ export default function ListContact() {
           </button>
         </div>
 
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="search by full name...."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full md:w-80 border rounded-lg px-4 py-2"
+          />
+        </div>
+
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
@@ -178,14 +193,14 @@ export default function ListContact() {
           <div className="text-center py-10 text-gray-500">Loading...</div>
         )}
 
-        {!loading && contacts.length === 0 && (
+        {!loading && filteredContacts.length === 0 && (
           <div className="text-center py-10 text-gray-500">
             No contacts found
           </div>
         )}
 
         <div className="md:hidden space-y-3">
-          {contacts.map((contact) => (
+          {filteredContacts.map((contact) => (
             <div key={contact.id} className="border rounded-xl p-4 shadow-sm">
               <div className="font-semibold text-blue-900">
                 {contact.full_name}
@@ -230,7 +245,7 @@ export default function ListContact() {
             </thead>
 
             <tbody>
-              {contacts.map((contact, index) => (
+              {filteredContacts.map((contact, index) => (
                 <tr key={contact.id} className="border-b hover:bg-blue-50">
                   <td className="px-4 py-3">
                     {(currentPage - 1) * 10 + index + 1}
