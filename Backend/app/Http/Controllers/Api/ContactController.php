@@ -17,11 +17,12 @@ class ContactController extends Controller
             // $contact = Contact::all();
             $sortBy = $request->sort_by ?? 'full_name';
             $sortOrder = $request->sort_order ?? 'asc';
+            $search = $request->search;
 
-            $contact = Contact::orderBy(
-                $sortBy,
-                $sortOrder
-            )->paginate(10);
+            $contact = Contact::when($search, function ($query) use ($search) {
+                $query->where('full_name', 'like', '%' . $search . '%');
+            })->orderBy($sortBy, $sortOrder)->paginate(10);
+
             return ApiMessage::success("Successfully get contact data", $contact, 200);
         } catch (\Exception $th) {
             return ApiMessage::error($th->getMessage(), 500);

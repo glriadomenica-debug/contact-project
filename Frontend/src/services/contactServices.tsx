@@ -10,9 +10,10 @@ export const getContacts = async (
   page = 1,
   sortBy = "full_name",
   sortOrder = "asc",
+  search = ""
 ): Promise<ApiResponse<ContactPagination>> => {
   const response = await api.get(
-    `/contacts?page=${page}&sort_by=${sortBy}&sort_order=${sortOrder}`,
+    `/contacts?page=${page}&sort_by=${sortBy}&sort_order=${sortOrder}&seacrh=${search}`,
   );
 
   return response.data;

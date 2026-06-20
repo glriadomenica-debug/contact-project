@@ -39,7 +39,7 @@ export default function ListContact() {
     try {
       setLoading(true);
 
-      const result = await getContacts(currentPage, sortBy, sortOrder);
+      const result = await getContacts(currentPage, sortBy, sortOrder, search);
 
       setContacts(result.data.data);
       setLastPage(result.data.last_page);
@@ -52,7 +52,7 @@ export default function ListContact() {
 
   useEffect(() => {
     fetchContacts();
-  }, [currentPage, sortBy, sortOrder]);
+  }, [currentPage, sortBy, sortOrder, search]);
 
   const filteredContacts = contacts.filter((contact) =>
     contact.full_name.toLowerCase().includes(search.toLowerCase()),
@@ -148,7 +148,7 @@ export default function ListContact() {
             onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
             className="bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-900"
           >
-            {sortOrder === "asc" ? "Ascending ↑" : "Descending ↓"}
+            {sortOrder === "asc" ? "Asc a-z" : "Desc z-a"}
           </button>
         </div>
 
@@ -157,7 +157,10 @@ export default function ListContact() {
             type="text"
             placeholder="search by full name...."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1);
+            }}
             className="w-full md:w-80 border rounded-lg px-4 py-2"
           />
         </div>
