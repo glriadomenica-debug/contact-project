@@ -96,7 +96,7 @@ export default function ListContact() {
 
     try {
       await createContact(formContact);
-      setSuccess("Contact created successfully");
+      setSuccess("Contact successfully created!");
       setErrors({
         full_name: "",
         email_address: "",
